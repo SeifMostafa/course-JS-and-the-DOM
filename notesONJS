@@ -1,0 +1,42 @@
+JS
+InnerText returns text with respect to Styling
+textContent returns text with NO respect to Styling
+
+while ‘%text%’ props. should be used if we are gonna modify text only without any modifications on HTML,,
+innerHTML returns HTML as DOMString describes the HTML tag.
+outerHTML returns HTML as DOMString with its children.
+
+instead of putting js code @end of HTML code, we can listen to event DOMContentLoaded 
+
+
+Reflow is the process of calculating the dimensions and position of page elements. This is a computationally intensive (slow) tasks. Repaint is the process of drawing the pixels to the screen. This is faster than reflow, but is still not a fast process. You want to make sure that your code causes the fewest number of reflows as possible.
+
+The JavaScript Event Loop
+The simplest explanation of JavaScript's concurrency model uses two rules: If some JavaScript is running, let it run until it is finished ("run-to-completion"). If no JavaScript is running, run any pending event handlers.
+Since most JavaScript is run in response to an event, this is known as an event loop: Pick up the next event, run its handler, and repeat.
+There are three parts you have to think about around the event loop:
+* the Call Stack
+* Web APIs/the browser
+* an Event Queue
+
+￼
+JS code run & all events handed to browser, when event happens, it goes to queue, waiting for empty call stack then executed normally.
+
+
+i.e: 
+Asynchronous code makes use of the JavaScript Event Loop. Any asynchronous code (like setTimeout or the function passed to .addEventListener()) is handled by the browser. When this asynchronous code is ready to be executed, it's moved to the queue where it waits until the Call Stack is empty. Whenever the Call Stack is empty, code moves from the Queue over to the Call Stack and gets executed.
+
+
+Since setTimeout() is an API provided by the browser, the call to setTimeout() gives the sayHi() function over to the browser which it starts a timer. After the timer is finished, the sayHi() function moves to the Queue. If the Call Stack is empty, then the sayHi() function is moved to the Call Stack and executed.
+
+
+if 0 milliseconds, that the sayHi function would run immediately. However, it still goes through the JavaScript Event Loop. So the function is handed off to the browser where the browser starts a timer for 0 milliseconds. Since the timer ends immediately, the sayHi function will move to the Queue, and then to the Call Stack once the Call Stack has finished executing any currently-running tasks.
+So why is this helpful? Well, this technique can help us to convert potentially long-running code to one that's broken up to allow for the browser to handle user interactions!
+
+
+
+The browser-provided setTimeout() function takes another function and a delay, and invokes the function after the delay has passed.
+Knowing how the JavaScript Event Loop works, we can use the setTimeout() method to help us write code that allows the browser to handle user interactions.
+
+
+One way to give the user a chance to interact with the page is to break up the adding of the content into chunks. Let's do this with setTimeout():
